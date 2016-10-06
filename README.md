@@ -81,8 +81,8 @@ Members of the cluster can be listed like this:
 91bc3c398fb3c146, started, infra2, http://127.0.0.1:22380, http://127.0.0.1:22379
 fd422379fda50e48, started, infra3, http://127.0.0.1:32380, http://127.0.0.1:32379
 ```
- 
-## Building an Application
+
+## Building an Application (optional)
 
 **Pre-Requisites**
 
