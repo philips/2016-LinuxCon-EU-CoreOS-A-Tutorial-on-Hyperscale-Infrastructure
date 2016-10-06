@@ -1,14 +1,14 @@
 # Introduction
 
-This tutorial will demo a number of technologies. The requirements for completing each section will be introduced in the section.
+This tutorial will demo a number of technologies. The requirements for completing each section will be introduced in the section. If you want to download and prepare all of the prerequisites before the talk please go through each section.
 
-This presentation was given at LinuxCon 2016 in Toronto. There was a live tutorial given and the video is not yet available. However, there are [slides](https://speakerdeck.com/philips/coreos-a-tutorial-on-hyperscale-infrastructure).
+This presentation was given at LinuxCon 2016 in Berlin. There are [slides](https://speakerdeck.com/philips/coreos-a-tutorial-on-hyperscale-infrastructure).
 
 ## etcd Basics
 
 **Pre-requisites**
 
-- [etcd and etcdctl](https://github.com/coreos/etcd/releases/tag/v3.0.6) for your platform
+- [etcd and etcdctl](https://github.com/coreos/etcd/releases/tag/v3.0.10) for your laptop
 
 First, run `etcd` in a terminal window.
 
@@ -61,14 +61,17 @@ toronto
 {"header":{"cluster_id":17237436991929493444,"member_id":9372538179322589801,"revision":11,"raft_term":2},"kvs":[{"key":"Zm9v","create_revision":2,"mod_revision":11,"version":10,"value":"dG9yb250bw=="}],"count":1}
 ```
 
-## etcd Clustering
+## etcd Clustering (optional)
+
+This section is optional. You can learn similar lessons by visiting [play.etcd.io](http://play.etcd.io)
 
 **Pre-requisites**
 
 - A working [Go environment](https://golang.org/doc/install)
 - Follow the upstream guide to [setup a local cluster](https://github.com/coreos/etcd/blob/master/Documentation/dev-guide/local_cluster.md#local-multi-member-cluster)
 
-After setting up the pre-requisites a three node etcd cluster will be running. 
+
+After setting up the pre-requisites a three node etcd cluster will be running.
 
 Members of the cluster can be listed like this:
 
@@ -84,10 +87,10 @@ fd422379fda50e48, started, infra3, http://127.0.0.1:32380, http://127.0.0.1:3237
 **Pre-Requisites**
 
 - A working local Docker client (`brew install docker`)
-- A VM to run Docker, recommend [minikube](https://github.com/kubernetes/minikube/releases)
+- A VM to run Docker, recommend [minikube](https://tectonic.com/blog/minikube-and-rkt.html)
 
 ```
-git clone https://github.com/philips/2016-LinuxCon-NA-CoreOS-A-Tutorial-on-Hyperscale-Infrastructure
+git clone https://github.com/philips/2016-LinuxCon-EU-CoreOS-A-Tutorial-on-Hyperscale-Infrastructure
 cd guestbook/v1
 eval $(minikube docker-env)
 VERSION=v1 REGISTRY=quay.io/philips make build
@@ -117,7 +120,7 @@ Or with docker:
 docker run quay.io/philips/guestbook:v1 
 ```
 
-## Debugging with Toolbox
+## Debugging with Toolbox (optional)
 
 **Pre-Requisites**
 - Any CoreOS virtual machine and SSH session
@@ -135,11 +138,8 @@ The environment can be customized to run any container whether that is Debian, U
 
 **Pre-Requisites**
 
-- An [AWS account](http://aws.amazon.com/) and [AWS cli](https://aws.amazon.com/cli/)
-  - An [AWS keypair for us-west-2](https://us-west-2.console.aws.amazon.com/ec2/v2/home?region=us-west-2#KeyPairs:sort=keyName)
-- [kube-aws](https://coreos.com/kubernetes/docs/latest/kubernetes-on-aws.html) installed and in your path
-- [kubectl 1.3.4+](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) installed and in your path
-- Follow the [Kubernetes + CoreOS + AWS docs](https://coreos.com/kubernetes/docs/latest/kubernetes-on-aws.html). 
+- [kubectl 1.3.6+](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) installed and in your path
+- A Kubernetes cluster, recommend [minikube](https://tectonic.com/blog/minikube-and-rkt.html)
 
 With a working Kubernetes cluster it is possible to proxy through to localhost for development without having to worry about auth:
 
