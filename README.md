@@ -100,9 +100,9 @@ VERSION=v1 REGISTRY=quay.io/philips make push
 ## Running a Single Container
 
 **Pre-Requisites**
-- Any CoreOS virtual machine and SSH session
+- A CoreOS virtual machine or minikube machine from above
 
-Now that we have built the container it is easy to run on a virtual machine with rkt:
+Now that we have built the container it is easy to run on a virtual machine with rkt, ssh in to your machine and run:
 
 ```
 rkt fetch docker://quay.io/philips/guestbook:v1 --insecure-options=image
@@ -111,7 +111,7 @@ rkt fetch docker://quay.io/philips/guestbook:v1 --insecure-options=image
 Now, one thing to note is that rkt does not have a daemon. So, we really on your system init system to monitor the process. To do that quickly under systemd do something like this:
 
 ```
-systemd-run rkt fetch docker://quay.io/philips/guestbook:v1 --insecure-options=image
+systemd-run rkt run docker://quay.io/philips/guestbook:v1 --insecure-options=image
 ```
 
 Or with docker:
@@ -264,6 +264,8 @@ kubectl delete service guestbook
 ```
 
 ## More on Services
+
+Note: this doesn't work on minikube clusters because DNS is provided in a different way.
 
 Port-forward cluster local DNS to your workstation.
 
