@@ -111,7 +111,7 @@ rkt fetch docker://quay.io/philips/guestbook:v1 --insecure-options=image
 Now, one thing to note is that rkt does not have a daemon. So, we really on your system init system to monitor the process. To do that quickly under systemd do something like this:
 
 ```
-systemd-run rkt run docker://quay.io/philips/guestbook:v1 --insecure-options=image
+sudo systemd-run rkt run docker://quay.io/philips/guestbook:v1 --insecure-options=image
 ```
 
 Or with docker:
