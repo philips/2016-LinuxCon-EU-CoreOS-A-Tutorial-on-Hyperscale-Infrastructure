@@ -1,0 +1,84 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: redis-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+    spec:
+      containers:
+      - image: redis:2.8.23
+        name: redis-master
+        ports:
+        - containerPort: 6379
+          name: redis-server
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redis
+    role: master
+  name: redis-master
+spec:
+  ports:
+  - port: 6379
+    targetPort: redis-server
+  selector:
+    app: redis
+    role: master
+
+---
+
+
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: redis-slave
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redis
+      role: slave
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+    spec:
+      containers:
+      - image: kubernetes/redis-slave:v2
+        name: redis-slave
+        ports:
+        - containerPort: 6379
+          name: redis-server
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: redis
+    role: slave
+  name: redis-slave
+spec:
+  ports:
+  - port: 6379
+    targetPort: redis-server
+  selector:
+    app: redis
+    role: slave
+
