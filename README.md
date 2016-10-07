@@ -156,7 +156,7 @@ curl 127.0.0.1:8001/api/v1/services
 The equivalent of this rest API call is:
 
 ```
-kubectl describes services
+kubectl describe services
 ```
 
 ## Kubernetes App Deployments
