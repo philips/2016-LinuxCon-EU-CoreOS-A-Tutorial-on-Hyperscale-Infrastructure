@@ -209,7 +209,7 @@ kubectl get pods -l app=guestbook
 Kubernetes will allow the app instance to be killed.
 
 ```
-kubectl delete guestbook-2893398214-ikc58
+kubectl delete pod guestbook-2893398214-ikc58
 ```
 
 But, it will drive the cluster state torwards a single running instance. Within a few seconds a replacement is launched:
