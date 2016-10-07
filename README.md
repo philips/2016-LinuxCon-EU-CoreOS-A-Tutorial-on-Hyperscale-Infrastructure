@@ -4,6 +4,62 @@ This tutorial will demo a number of technologies. The requirements for completin
 
 This presentation was given at LinuxCon 2016 in Berlin. There are [slides](https://speakerdeck.com/philips/coreos-a-tutorial-on-hyperscale-infrastructure).
 
+## Kubernetes Basics
+
+**Pre-Requisites**
+
+- [kubectl 1.3.6+](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) installed and in your path
+- A Kubernetes cluster, recommend [minikube](https://tectonic.com/blog/minikube-and-rkt.html)
+
+With a working Kubernetes cluster it is possible to proxy through to localhost for development without having to worry about auth:
+
+```
+kubectl proxy
+```
+
+From there the API becomes very accessible using well-known tools like curl:
+
+```
+curl 127.0.0.1:8001/api/v1/services
+```
+
+The equivalent of this rest API call is:
+
+```
+kubectl describe services
+```
+
+## Tectonic Starter (optional)
+
+**Pre-Requisites**
+
+- [kubectl 1.3.6+](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) installed and in your path
+- A Kubernetes cluster, recommend [minikube](https://tectonic.com/blog/minikube-and-rkt.html)
+
+Visit https://tectonic.com/starter/ to signup and configure.
+
+## Running a Single Container
+
+**Pre-Requisites**
+- A CoreOS virtual machine or [minikube](https://tectonic.com/blog/minikube-and-rkt.html) machine from above
+
+Now that we have built the container it is easy to run on a virtual machine with rkt, ssh in to your machine and run:
+
+```
+rkt fetch docker://quay.io/philips/guestbook:v1 --insecure-options=image
+```
+
+Now, one thing to note is that rkt does not have a daemon. So, we really on your system init system to monitor the process. To do that quickly under systemd do something like this:
+
+```
+sudo systemd-run rkt run docker://quay.io/philips/guestbook:v1 --insecure-options=image
+```
+
+Or with docker:
+
+```
+docker run quay.io/philips/guestbook:v1 
+```
 ## etcd Basics
 
 **Pre-requisites**
@@ -97,28 +153,7 @@ VERSION=v1 REGISTRY=quay.io/philips make build
 VERSION=v1 REGISTRY=quay.io/philips make push
 ```
 
-## Running a Single Container
 
-**Pre-Requisites**
-- A CoreOS virtual machine or minikube machine from above
-
-Now that we have built the container it is easy to run on a virtual machine with rkt, ssh in to your machine and run:
-
-```
-rkt fetch docker://quay.io/philips/guestbook:v1 --insecure-options=image
-```
-
-Now, one thing to note is that rkt does not have a daemon. So, we really on your system init system to monitor the process. To do that quickly under systemd do something like this:
-
-```
-sudo systemd-run rkt run docker://quay.io/philips/guestbook:v1 --insecure-options=image
-```
-
-Or with docker:
-
-```
-docker run quay.io/philips/guestbook:v1 
-```
 
 ## Debugging with Toolbox (optional)
 
@@ -134,30 +169,7 @@ toolbox
 The environment can be customized to run any container whether that is Debian, Ubuntu, Fedora, Arch, etc.
 
 
-## Kubernetes Basics
 
-**Pre-Requisites**
-
-- [kubectl 1.3.6+](https://coreos.com/kubernetes/docs/latest/configure-kubectl.html) installed and in your path
-- A Kubernetes cluster, recommend [minikube](https://tectonic.com/blog/minikube-and-rkt.html)
-
-With a working Kubernetes cluster it is possible to proxy through to localhost for development without having to worry about auth:
-
-```
-kubectl proxy
-```
-
-From there the API becomes very accessible using well-known tools like curl:
-
-```
-curl 127.0.0.1:8001/api/v1/services
-```
-
-The equivalent of this rest API call is:
-
-```
-kubectl describe services
-```
 
 ## Launch Database
 
