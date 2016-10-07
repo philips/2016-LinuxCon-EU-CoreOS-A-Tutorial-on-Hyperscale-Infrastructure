@@ -159,6 +159,14 @@ The equivalent of this rest API call is:
 kubectl describe services
 ```
 
+## Launch Database
+
+The app we are going to deploying uses redis as its primary datastore. Deploy a redis instance in the cluster with kubectl create:
+
+```
+kubectl create -f https://raw.githubusercontent.com/philips/2016-LinuxCon-EU-CoreOS-A-Tutorial-on-Hyperscale-Infrastructure/master/guestbook/resources/redis.yml
+```
+
 ## Kubernetes App Deployments
 
 First, lets run the app that was built earlier and pushed to quay.io.
@@ -230,8 +238,10 @@ Earlier we used port forwarding to confirm the application was running. This is 
 
 ```
 kubectl delete deployment guestbook
-kubectl run guestbook --image quay.io/philips/guestbook:v1 -l app=guestbook --expose --port 3000
+kubectl run guestbook --image quay.io/philips/guestbook:v1 -l app=guestbook
+kubectl expose deployment guestbook --type NodePort --port 3000
 ```
+
 
 Now the service will have a cluster IP that is routable to other nodes on the cluster.
 
@@ -241,7 +251,11 @@ kubectl describe service guestbook
 
 Often, this isn't terribly useful as users workstation's rarely are on the same network/VPC/overlay/etc that the cluster is on. The 10.0.0.0/24 address isn't routable. But, the IPs of the nodes are. And by using a type of service called a "NodePort" a port on the nodes will forward to the service.
 
-Assuming we setup our cluster at http://toronto.example.com:31512/ 
+Minikube helps us here! Simply run this and it will talk to the API and find the port
+
+```
+minikube service guestbook
+```
 
 ```
 kubectl edit service guestbook

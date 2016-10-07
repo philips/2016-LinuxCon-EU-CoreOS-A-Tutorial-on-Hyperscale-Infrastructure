@@ -36,5 +36,6 @@ kubectl port-forward $(kubectl get pods -l app=redis,role=slave -o template --te
 Tell the app to use those ports
 
 ```
+cd guestbook/v2
 REDIS_SLAVE=localhost:6379 REDIS_MASTER=localhost:6380 go run main.go
 ```
